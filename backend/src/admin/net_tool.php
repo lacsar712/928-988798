@@ -56,6 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="faq.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-question-circle me-2"></i>FAQ 管理
                     </a>
+                    <a href="announcement.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-megaphone me-2"></i>公告管理
+                    </a>
                     <a href="net_tool.php" class="list-group-item list-group-item-action active">
                         <i class="bi bi-broadcast me-2"></i>网络检测工具
                     </a>

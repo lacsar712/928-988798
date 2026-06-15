@@ -122,4 +122,38 @@ INSERT INTO `faq_items` (`category_id`, `question`, `answer`, `sort_order`, `is_
 (5, '机动车年检如何办理？', '<p>小型非营运载客汽车6年内免检，每2年申领检验标志。</p><p>超过6年不满10年的，每2年上线检验1次；超过10年的，每年检验1次。</p><p>可通过"交管12123"APP预约办理。</p>', 2, 0, 1345, 1),
 (5, '外地车限行规定是什么？', '<p>工作日早高峰7:00-9:00、晚高峰17:00-19:00，外地号牌小型客车禁止在绕城高速公路以内区域通行。</p><p>确需临时进入限行区域的，可提前在"交管12123"APP申请"入城通行证"。</p>', 3, 0, 2234, 1);
 
+-- ----------------------------
+-- Table structure for announcements
+-- ----------------------------
+DROP TABLE IF EXISTS `announcements`;
+CREATE TABLE `announcements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `content` text,
+  `position` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:顶部跑马灯 2:中部飘窗 3:底部条',
+  `bg_color` varchar(50) DEFAULT '#ff6b6b',
+  `text_color` varchar(50) DEFAULT '#ffffff',
+  `link_url` varchar(500) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `can_close` tinyint(1) NOT NULL DEFAULT '1',
+  `click_count` int(11) NOT NULL DEFAULT '0',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_position` (`position`),
+  KEY `idx_status` (`status`),
+  KEY `idx_time` (`start_time`,`end_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of announcements
+-- ----------------------------
+INSERT INTO `announcements` (`title`, `content`, `position`, `bg_color`, `text_color`, `link_url`, `start_time`, `end_time`, `can_close`, `sort_order`, `status`) VALUES
+('系统维护通知', '本系统将于2024年12月31日22:00-次日02:00进行系统升级维护，期间可能短暂无法访问，请提前做好相关工作安排。', 1, '#dc3545', '#ffffff', NULL, '2024-01-01 00:00:00', '2025-12-31 23:59:59', 1, 1, 1),
+('重要公告', '2024年度政务公开评估工作已启动，请各部门按照要求及时报送相关材料。点击查看详情。', 2, '#004d99', '#ffffff', 'faq.php', '2024-01-01 00:00:00', '2025-12-31 23:59:59', 1, 2, 1),
+('温馨提示', '冬季天干物燥，请注意用火用电安全，做好防火措施。', 3, '#28a745', '#ffffff', NULL, '2024-01-01 00:00:00', '2025-12-31 23:59:59', 0, 3, 1);
+
 SET FOREIGN_KEY_CHECKS = 1;

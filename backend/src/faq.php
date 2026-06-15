@@ -135,6 +135,7 @@ function render_category_tree($categories, $level = 0, $current_cat, $search_key
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/announcement.css" rel="stylesheet">
     <style>
         .faq-sidebar {
             position: sticky;
@@ -426,6 +427,7 @@ function render_category_tree($categories, $level = 0, $current_cat, $search_key
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/announcement.js"></script>
     <script>
         let viewedItems = new Set();
 
