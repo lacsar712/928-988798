@@ -338,5 +338,46 @@ CREATE TABLE `assessment_vote_details` (
   KEY `idx_dept_indicator` (`department_id`,`indicator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ----------------------------
+-- Table structure for openday_activities
+-- ----------------------------
+DROP TABLE IF EXISTS `openday_activities`;
+CREATE TABLE `openday_activities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `theme` varchar(255) NOT NULL COMMENT '活动主题',
+  `event_time` datetime NOT NULL COMMENT '活动时间',
+  `location` varchar(255) NOT NULL COMMENT '活动地点',
+  `quota` int(11) NOT NULL DEFAULT '0' COMMENT '名额限额',
+  `manager` varchar(100) NOT NULL COMMENT '负责人',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_event_time` (`event_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Table structure for openday_reservations
+-- ----------------------------
+DROP TABLE IF EXISTS `openday_reservations`;
+CREATE TABLE `openday_reservations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `activity_id` int(11) NOT NULL COMMENT '活动ID',
+  `booking_code` varchar(20) NOT NULL COMMENT '预约编号',
+  `name` varchar(50) NOT NULL COMMENT '姓名',
+  `id_card` varchar(18) NOT NULL COMMENT '身份证号',
+  `phone` varchar(11) NOT NULL COMMENT '手机号',
+  `companions` int(11) NOT NULL DEFAULT '0' COMMENT '同行人数',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1有效 0已取消',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_booking_code` (`booking_code`),
+  KEY `idx_activity_id` (`activity_id`),
+  KEY `idx_phone` (`phone`),
+  KEY `idx_phone_code` (`phone`, `booking_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 SET FOREIGN_KEY_CHECKS = 1;
 

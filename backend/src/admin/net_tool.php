@@ -59,6 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="assessment.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-person-check me-2"></i>绩效评议
                     </a>
+                    <a href="openday.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-calendar-event me-2"></i>开放日预约
+                    </a>
                     <a href="announcement.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-megaphone me-2"></i>公告管理
                     </a>
