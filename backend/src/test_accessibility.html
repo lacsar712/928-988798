@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无障碍功能测试页面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/accessibility.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <h1 class="display-4 mb-4 text-gov-blue fw-bold">无障碍功能测试页面</h1>
+        
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">字体大小测试</h2>
+                <p>这是一段用于测试字体大小缩放的普通文本。</p>
+                <p class="lead">这是一段大号引导文本，用于测试字体缩放效果。</p>
+                <small class="text-muted">这是一段小号辅助文本。</small>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">高对比度 / 护眼模式测试</h2>
+                <p>高对比度模式会将页面变为黑底黄字，护眼模式会将页面变为米色背景。</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-white p-3">
+                            <h5 class="text-dark">卡片标题</h5>
+                            <p class="text-muted">卡片内容文本，用于测试不同背景下的显示效果。</p>
+                            <button class="btn btn-gov-blue">测试按钮</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">列表项 1</li>
+                            <li class="list-group-item">列表项 2</li>
+                            <li class="list-group-item">列表项 3</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">TTS 朗读测试</h2>
+                <p>开启 TTS 朗读模式后，点击页面任意段落、标题或列表项即可朗读内容，再次点击停止朗读。</p>
+                <p>这是第一段测试文本，用于测试语音合成功能是否正常工作。</p>
+                <p>这是第二段测试文本，SpeechSynthesis API 是浏览器内置的语音合成接口。</p>
+                <h3>子标题示例</h3>
+                <ul>
+                    <li>列表项测试 1：无障碍功能对于视障用户非常重要</li>
+                    <li>列表项测试 2：高对比度模式可以帮助视力较弱的用户</li>
+                    <li>列表项测试 3：键盘焦点高亮帮助键盘操作的用户</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3">键盘焦点高亮测试</h2>
+                <p>开启键盘焦点高亮后，按 Tab 键切换焦点时，元素会显示明显的橙色轮廓。</p>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary" tabindex="0">按钮 1</button>
+                    <button class="btn btn-secondary" tabindex="0">按钮 2</button>
+                    <a href="#" class="btn btn-outline-primary" tabindex="0">链接按钮</a>
+                    <input type="text" class="form-control" style="width: 200px;" placeholder="输入框" tabindex="0">
+                    <select class="form-select" style="width: 150px;" tabindex="0">
+                        <option>下拉选项 1</option>
+                        <option>下拉选项 2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-body">
+                <h2 class="h4 mb-3">测试说明</h2>
+                <ol>
+                    <li>点击右下角的无障碍按钮（轮椅图标）打开设置面板</li>
+                    <li>调整字体大小：点击 A- 或 A+ 按钮，范围 80%-150%</li>
+                    <li>开启高对比度模式：页面变为黑底黄字</li>
+                    <li>开启护眼模式：页面变为米色背景</li>
+                    <li>开启 TTS 朗读模式：点击任意文本内容进行朗读</li>
+                    <li>开启键盘焦点高亮：按 Tab 键查看焦点效果</li>
+                    <li>点击"保存设置"将偏好保存到 localStorage（无后端时仅本地保存）</li>
+                    <li>点击"重置默认"恢复所有默认设置</li>
+                </ol>
+                <p class="text-muted small mt-3 mb-0">注意：由于当前使用静态服务器，后端 API 暂不可用，偏好仅保存在 localStorage 中。在完整 PHP 环境中会同时保存到服务端数据库。</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/accessibility.js"></script>
+</body>
+</html>

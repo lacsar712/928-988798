@@ -488,3 +488,23 @@ INSERT INTO `purchases` (`project_name`, `procurement_unit`, `budget_amount`, `s
 ('XX市生态环境监测设备采购', '市生态环境局', 3200000.00, '流标', '2026-04-30 17:00:00', '<p>市生态环境局水质及空气质量自动监测站设备采购项目，因有效投标不足三家，本项目流标。</p><p><strong>流标原因：</strong>有效投标供应商不足法定三家，根据《政府采购法》相关规定，本项目予以流标，将择期重新组织招标。</p>', NULL, NULL, NULL),
 ('XX市公共资源交易系统维护服务', '市公共资源交易中心', 800000.00, '招标中', '2026-08-15 17:00:00', '<p>市公共资源交易中心现就公共资源交易系统年度维护服务进行公开招标。</p><p><strong>服务内容：</strong></p><ul><li>系统日常运维及故障排除</li><li>系统安全巡检及漏洞修复</li><li>功能优化及小版本升级</li><li>7×24小时技术支持热线</li></ul>', NULL, NULL, NULL);
 
+-- ----------------------------
+-- Table structure for accessibility_preferences
+-- ----------------------------
+DROP TABLE IF EXISTS `accessibility_preferences`;
+CREATE TABLE `accessibility_preferences` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(100) NOT NULL COMMENT 'Session ID，用于未登录用户',
+  `admin_user` varchar(255) DEFAULT NULL COMMENT '管理员用户名，用于已登录用户跨浏览器同步',
+  `font_size` tinyint(1) NOT NULL DEFAULT 100 COMMENT '字体缩放比例 80-150',
+  `high_contrast` tinyint(1) NOT NULL DEFAULT 0 COMMENT '高对比度模式 0关1开',
+  `eye_care` tinyint(1) NOT NULL DEFAULT 0 COMMENT '护眼模式 0关1开',
+  `tts_mode` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'TTS朗读模式 0关1开',
+  `focus_highlight` tinyint(1) NOT NULL DEFAULT 0 COMMENT '键盘焦点高亮 0关1开',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_session_id` (`session_id`),
+  KEY `idx_admin_user` (`admin_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
