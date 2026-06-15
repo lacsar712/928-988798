@@ -249,6 +249,7 @@ function render_category_tree($categories, $level = 0, $current_cat, $search_key
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">首页</a></li>
                     <li class="nav-item"><a class="nav-link active" href="faq.php">常见问题</a></li>
+                    <li class="nav-item"><a class="nav-link" href="emergency_contact.php">应急通讯录</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin/login.php">管理登录</a></li>
                 </ul>
             </div>

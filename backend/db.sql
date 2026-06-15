@@ -156,4 +156,82 @@ INSERT INTO `announcements` (`title`, `content`, `position`, `bg_color`, `text_c
 ('重要公告', '2024年度政务公开评估工作已启动，请各部门按照要求及时报送相关材料。点击查看详情。', 2, '#004d99', '#ffffff', 'faq.php', '2024-01-01 00:00:00', '2025-12-31 23:59:59', 1, 2, 1),
 ('温馨提示', '冬季天干物燥，请注意用火用电安全，做好防火措施。', 3, '#28a745', '#ffffff', NULL, '2024-01-01 00:00:00', '2025-12-31 23:59:59', 0, 3, 1);
 
+-- ----------------------------
+-- Table structure for emergency_departments
+-- ----------------------------
+DROP TABLE IF EXISTS `emergency_departments`;
+CREATE TABLE `emergency_departments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL COMMENT '部门名称',
+  `icon` varchar(50) DEFAULT NULL COMMENT '图标',
+  `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_sort_order` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of emergency_departments
+-- ----------------------------
+INSERT INTO `emergency_departments` (`name`, `icon`, `sort_order`, `status`) VALUES
+('应急办', 'bi-shield-exclamation', 1, 1),
+('消防救援', 'bi-fire', 2, 1),
+('医疗急救', 'bi-heart-pulse', 3, 1),
+('公安', 'bi-person-badge', 4, 1),
+('电力抢修', 'bi-lightning-charge', 5, 1),
+('燃气抢修', 'bi-flame', 6, 1),
+('供水抢修', 'bi-droplet', 7, 1),
+('交通救援', 'bi-truck', 8, 1);
+
+-- ----------------------------
+-- Table structure for emergency_contacts
+-- ----------------------------
+DROP TABLE IF EXISTS `emergency_contacts`;
+CREATE TABLE `emergency_contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_id` int(11) NOT NULL COMMENT '部门ID',
+  `name` varchar(50) NOT NULL COMMENT '姓名',
+  `position` varchar(100) DEFAULT NULL COMMENT '职务',
+  `emergency_phone` varchar(50) DEFAULT NULL COMMENT '24h应急电话',
+  `office_phone` varchar(50) DEFAULT NULL COMMENT '办公电话',
+  `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
+  `duty_time` varchar(100) DEFAULT NULL COMMENT '值班时间',
+  `is_24h` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否24h应急',
+  `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_department_id` (`department_id`),
+  KEY `idx_is_24h` (`is_24h`),
+  KEY `idx_sort_order` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of emergency_contacts
+-- ----------------------------
+INSERT INTO `emergency_contacts` (`department_id`, `name`, `position`, `emergency_phone`, `office_phone`, `email`, `duty_time`, `is_24h`, `sort_order`, `status`) VALUES
+(1, '张伟', '应急办主任', '13800138001', '010-88881001', 'zhangwei@gov.cn', '24小时值班', 1, 1, 1),
+(1, '李娜', '应急办副主任', '13800138002', '010-88881002', 'lina@gov.cn', '工作日 9:00-17:00', 0, 2, 1),
+(1, '王强', '应急协调员', '13800138003', '010-88881003', 'wangqiang@gov.cn', '24小时轮班', 1, 3, 1),
+(2, '陈刚', '消防支队支队长', '13900139001', '010-88882001', 'chengang@fire.gov.cn', '24小时值班', 1, 1, 1),
+(2, '刘芳', '消防中队中队长', '13900139002', '010-88882002', 'liufang@fire.gov.cn', '24小时轮班', 1, 2, 1),
+(2, '赵磊', '消防员', '13900139003', '010-88882003', 'zhaolei@fire.gov.cn', '24小时轮班', 1, 3, 1),
+(3, '孙医生', '急诊科主任', '13700137001', '010-88883001', 'sun@hospital.gov.cn', '24小时值班', 1, 1, 1),
+(3, '周护士', '护士长', '13700137002', '010-88883002', 'zhou@hospital.gov.cn', '24小时轮班', 1, 2, 1),
+(3, '吴医生', '急诊医生', '13700137003', '010-88883003', 'wu@hospital.gov.cn', '工作日 8:00-17:00', 0, 3, 1),
+(4, '马警官', '派出所所长', '13600136001', '010-88884001', 'ma@police.gov.cn', '24小时值班', 1, 1, 1),
+(4, '黄警官', '治安民警', '13600136002', '010-88884002', 'huang@police.gov.cn', '24小时轮班', 1, 2, 1),
+(5, '韩工程师', '电力抢修队队长', '13500135001', '010-88885001', 'han@power.gov.cn', '24小时值班', 1, 1, 1),
+(5, '徐师傅', '电力抢修员', '13500135002', '010-88885002', 'xu@power.gov.cn', '24小时轮班', 1, 2, 1),
+(6, '冯工程师', '燃气抢修队队长', '13400134001', '010-88886001', 'feng@gas.gov.cn', '24小时值班', 1, 1, 1),
+(6, '郑师傅', '燃气抢修员', '13400134002', '010-88886002', 'zheng@gas.gov.cn', '24小时轮班', 1, 2, 1),
+(7, '何工程师', '供水抢修队队长', '13300133001', '010-88887001', 'he@water.gov.cn', '24小时值班', 1, 1, 1),
+(7, '吕师傅', '供水抢修员', '13300133002', '010-88887002', 'lv@water.gov.cn', '24小时轮班', 1, 2, 1),
+(8, '孔队长', '交通救援队队长', '13200132001', '010-88888001', 'kong@traffic.gov.cn', '24小时值班', 1, 1, 1),
+(8, '曹师傅', '交通救援员', '13200132002', '010-88888002', 'cao@traffic.gov.cn', '24小时轮班', 1, 2, 1);
+
 SET FOREIGN_KEY_CHECKS = 1;
+
