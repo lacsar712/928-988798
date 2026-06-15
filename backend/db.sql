@@ -381,3 +381,77 @@ CREATE TABLE `openday_reservations` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- ----------------------------
+-- Table structure for emergency_plans
+-- ----------------------------
+DROP TABLE IF EXISTS `emergency_plans`;
+CREATE TABLE `emergency_plans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plan_code` varchar(50) NOT NULL COMMENT '预案编号',
+  `name` varchar(255) NOT NULL COMMENT '预案名称',
+  `category` varchar(20) NOT NULL COMMENT '类别：自然灾害/事故灾难/公共卫生/社会安全',
+  `classification` varchar(10) NOT NULL DEFAULT '公开' COMMENT '密级：公开/内部',
+  `version` varchar(20) NOT NULL DEFAULT '1.0' COMMENT '版本号',
+  `reviser` varchar(100) NOT NULL COMMENT '修订人',
+  `publish_date` date DEFAULT NULL COMMENT '发布日期',
+  `pdf_file` varchar(500) DEFAULT NULL COMMENT 'PDF附件路径',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_plan_code` (`plan_code`),
+  KEY `idx_category` (`category`),
+  KEY `idx_classification` (`classification`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of emergency_plans
+-- ----------------------------
+INSERT INTO `emergency_plans` (`plan_code`, `name`, `category`, `classification`, `version`, `reviser`, `publish_date`, `pdf_file`, `status`) VALUES
+('YA-2024-001', 'XX市防汛抗旱应急预案', '自然灾害', '公开', '3.0', '市应急管理局', '2024-03-15', NULL, 1),
+('YA-2024-002', 'XX市地震应急预案', '自然灾害', '公开', '2.1', '市应急管理局', '2024-05-20', NULL, 1),
+('YA-2024-003', 'XX市突发地质灾害应急预案', '自然灾害', '内部', '1.2', '市自然资源局', '2024-06-10', NULL, 1),
+('YA-2024-004', 'XX市危险化学品事故应急预案', '事故灾难', '公开', '4.0', '市应急管理局', '2024-01-10', NULL, 1),
+('YA-2024-005', 'XX市重大交通事故应急预案', '事故灾难', '内部', '2.0', '市公安局', '2024-04-22', NULL, 1),
+('YA-2024-006', 'XX市突发公共卫生事件应急预案', '公共卫生', '公开', '5.0', '市卫健委', '2024-02-28', NULL, 1),
+('YA-2024-007', 'XX市食品安全事故应急预案', '公共卫生', '公开', '3.1', '市市场监管局', '2024-07-05', NULL, 1),
+('YA-2024-008', 'XX市群体性事件应急预案', '社会安全', '内部', '2.0', '市公安局', '2024-03-01', NULL, 1),
+('YA-2024-009', 'XX市恐怖袭击事件应急预案', '社会安全', '内部', '1.5', '市公安局', '2024-04-15', NULL, 1),
+('YA-2024-010', 'XX市暴雨洪涝灾害应急预案', '自然灾害', '公开', '2.0', '市水利局', '2024-08-01', NULL, 1);
+
+-- ----------------------------
+-- Table structure for emergency_plan_revisions
+-- ----------------------------
+DROP TABLE IF EXISTS `emergency_plan_revisions`;
+CREATE TABLE `emergency_plan_revisions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plan_id` int(11) NOT NULL COMMENT '预案ID',
+  `version` varchar(20) NOT NULL COMMENT '版本号',
+  `reviser` varchar(100) NOT NULL COMMENT '修订人',
+  `change_summary` text COMMENT '变更说明',
+  `pdf_file` varchar(500) DEFAULT NULL COMMENT '该版本PDF附件',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修订时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of emergency_plan_revisions
+-- ----------------------------
+INSERT INTO `emergency_plan_revisions` (`plan_id`, `version`, `reviser`, `change_summary`) VALUES
+(1, '1.0', '市水利局', '初始版本发布'),
+(1, '2.0', '市应急管理局', '根据新防洪标准修订响应等级划分'),
+(1, '3.0', '市应急管理局', '增加城市内涝专项处置流程'),
+(2, '1.0', '市地震局', '初始版本发布'),
+(2, '2.0', '市应急管理局', '更新震后评估标准和恢复重建方案'),
+(2, '2.1', '市应急管理局', '补充次生灾害防范措施'),
+(4, '1.0', '市安监局', '初始版本发布'),
+(4, '2.0', '市应急管理局', '调整应急响应分级标准'),
+(4, '3.0', '市应急管理局', '增加危化品运输事故处置方案'),
+(4, '4.0', '市应急管理局', '全面修订，衔接省级新预案体系'),
+(6, '1.0', '市卫健委', '初始版本发布'),
+(6, '2.0', '市卫健委', '增加传染病防控专项预案'),
+(6, '3.0', '市卫健委', '修订应急响应启动条件'),
+(6, '4.0', '市卫健委', '根据新冠疫情防控经验全面修订'),
+(6, '5.0', '市卫健委', '优化多部门协同联动机制');
+

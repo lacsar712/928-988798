@@ -101,6 +101,9 @@ check_login();
                     <a href="emergency_contact.php" class="list-group-item list-group-item-action active">
                         <i class="bi bi-telephone-inbound me-2"></i>应急通讯录
                     </a>
+                    <a href="emergency_plan.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-file-earmark-medical me-2"></i>应急预案管理
+                    </a>
                     <a href="net_tool.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-broadcast me-2"></i>网络检测工具
                     </a>
