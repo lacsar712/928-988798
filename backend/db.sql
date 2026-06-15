@@ -455,3 +455,36 @@ INSERT INTO `emergency_plan_revisions` (`plan_id`, `version`, `reviser`, `change
 (6, '4.0', '市卫健委', '根据新冠疫情防控经验全面修订'),
 (6, '5.0', '市卫健委', '优化多部门协同联动机制');
 
+-- ----------------------------
+-- Table structure for purchases
+-- ----------------------------
+DROP TABLE IF EXISTS `purchases`;
+CREATE TABLE `purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(500) NOT NULL COMMENT '项目名称',
+  `procurement_unit` varchar(200) NOT NULL COMMENT '采购单位',
+  `budget_amount` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '预算金额',
+  `status` varchar(20) NOT NULL DEFAULT '招标中' COMMENT '状态：招标中/已截止/已成交/流标',
+  `deadline` datetime DEFAULT NULL COMMENT '报名截止时间',
+  `content` text COMMENT '公告内容',
+  `winner` varchar(200) DEFAULT NULL COMMENT '中标人',
+  `winning_amount` decimal(15,2) DEFAULT NULL COMMENT '中标金额',
+  `attachment` varchar(500) DEFAULT NULL COMMENT '附件路径',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_budget` (`budget_amount`),
+  KEY `idx_deadline` (`deadline`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of purchases
+-- ----------------------------
+INSERT INTO `purchases` (`project_name`, `procurement_unit`, `budget_amount`, `status`, `deadline`, `content`, `winner`, `winning_amount`, `attachment`) VALUES
+('XX市智慧政务平台升级改造项目', '市大数据中心', 5800000.00, '招标中', '2026-07-31 17:00:00', '<p>XX市大数据中心现就智慧政务平台升级改造项目进行公开招标，欢迎符合条件的供应商参加投标。</p><p><strong>项目概况：</strong></p><ul><li>建设内容：政务服务平台升级、数据共享交换平台建设、统一身份认证系统改造</li><li>实施周期：合同签订后12个月内完成</li><li>质量要求：符合国家及行业相关标准</li></ul><p><strong>供应商资格要求：</strong></p><ul><li>具有独立法人资格</li><li>具备计算机信息系统集成二级及以上资质</li><li>近三年内有不少于2个同类项目业绩</li></ul>', NULL, NULL, NULL),
+('XX市应急指挥中心视频会议系统采购', '市应急管理局', 1200000.00, '已截止', '2026-06-15 17:00:00', '<p>市应急管理局拟采购视频会议系统一套，用于市、区两级应急指挥中心远程会商。</p><p><strong>技术要求：</strong></p><ul><li>支持4K超高清视频会议</li><li>支持不少于50方同时在线</li><li>兼容现有指挥大厅大屏系统</li><li>支持移动端接入</li></ul>', NULL, NULL, NULL),
+('XX市政务服务中心办公家具采购', '市政务服务中心', 350000.00, '已成交', '2026-05-20 17:00:00', '<p>市政务服务中心新址办公家具采购项目，包括办公桌椅、会议桌、文件柜等。</p><p><strong>采购清单：</strong></p><ul><li>办公桌椅：200套</li><li>会议桌：10张</li><li>文件柜：100个</li><li>接待沙发：20套</li></ul>', 'XX家具制造有限公司', 298000.00, NULL),
+('XX市生态环境监测设备采购', '市生态环境局', 3200000.00, '流标', '2026-04-30 17:00:00', '<p>市生态环境局水质及空气质量自动监测站设备采购项目，因有效投标不足三家，本项目流标。</p><p><strong>流标原因：</strong>有效投标供应商不足法定三家，根据《政府采购法》相关规定，本项目予以流标，将择期重新组织招标。</p>', NULL, NULL, NULL),
+('XX市公共资源交易系统维护服务', '市公共资源交易中心', 800000.00, '招标中', '2026-08-15 17:00:00', '<p>市公共资源交易中心现就公共资源交易系统年度维护服务进行公开招标。</p><p><strong>服务内容：</strong></p><ul><li>系统日常运维及故障排除</li><li>系统安全巡检及漏洞修复</li><li>功能优化及小版本升级</li><li>7×24小时技术支持热线</li></ul>', NULL, NULL, NULL);
+
