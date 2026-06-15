@@ -33,6 +33,9 @@ check_login();
                     <a href="index.php" class="list-group-item list-group-item-action active">
                         <i class="bi bi-speedometer2 me-2"></i>控制台
                     </a>
+                    <a href="faq.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-question-circle me-2"></i>FAQ 管理
+                    </a>
                     <a href="net_tool.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-broadcast me-2"></i>网络检测工具
                     </a>

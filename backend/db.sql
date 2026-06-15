@@ -55,4 +55,71 @@ CREATE TABLE `sys_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ----------------------------
+-- Table structure for faq_categories
+-- ----------------------------
+DROP TABLE IF EXISTS `faq_categories`;
+CREATE TABLE `faq_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_parent_id` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of faq_categories
+-- ----------------------------
+INSERT INTO `faq_categories` (`id`, `parent_id`, `name`, `icon`, `sort_order`, `status`) VALUES
+(1, 0, '户口', 'bi-people-fill', 1, 1),
+(2, 0, '医保', 'bi-heart-pulse-fill', 2, 1),
+(3, 0, '社保', 'bi-shield-check', 3, 1),
+(4, 0, '教育', 'bi-mortarboard-fill', 4, 1),
+(5, 0, '出行', 'bi-car-front-fill', 5, 1);
+
+-- ----------------------------
+-- Table structure for faq_items
+-- ----------------------------
+DROP TABLE IF EXISTS `faq_items`;
+CREATE TABLE `faq_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `question` varchar(500) NOT NULL,
+  `answer` mediumtext NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `is_top` tinyint(1) NOT NULL DEFAULT '0',
+  `view_count` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_category_id` (`category_id`),
+  KEY `idx_is_top` (`is_top`),
+  FULLTEXT KEY `ft_qa` (`question`,`answer`) WITH PARSER ngram
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of faq_items
+-- ----------------------------
+INSERT INTO `faq_items` (`category_id`, `question`, `answer`, `sort_order`, `is_top`, `view_count`, `status`) VALUES
+(1, '新生儿如何办理户口登记？', '<p>新生儿出生后一个月内，由婴儿监护人或户主向婴儿父亲或母亲常住户口所在地公安派出所申报出生登记。</p><p><strong>所需材料：</strong></p><ul><li>出生医学证明原件及复印件</li><li>父母双方居民户口簿、居民身份证</li><li>结婚证原件及复印件</li></ul><p>办理时限：材料齐全当场办结。</p>', 1, 1, 1256, 1),
+(1, '购房落户需要什么条件？', '<p>凡在本市市区购买成套商品房（含二手房），面积达60平方米以上，可申请本人、配偶及未成年子女常住户口。</p><p><strong>所需材料：</strong></p><ul><li>房屋产权证或按揭购房合同</li><li>户口簿、身份证</li><li>亲属关系证明</li></ul>', 2, 0, 892, 1),
+(1, '户口迁移如何办理？', '<p>跨区县户口迁移，需先到迁入地派出所申请准迁证，再回原户籍地办理迁移证，最后到迁入地落户。</p><p>本市内户口迁移实行"一站式"服务，直接到迁入地派出所办理即可。</p>', 3, 0, 678, 1),
+(2, '城镇居民医保如何参保缴费？', '<p>本市户籍未参加职工医保的居民，可持身份证、户口簿到户籍所在地社区服务中心办理参保登记。</p><p><strong>缴费标准：</strong>成年人每人每年380元，未成年人每人每年250元。</p><p>缴费时间：每年9月1日至12月31日缴纳下年度医保费。</p>', 1, 1, 2341, 1),
+(2, '医保异地就医如何备案？', '<p>参保人跨省异地就医前，需办理异地就医备案手续。</p><p><strong>办理方式：</strong></p><ul><li>线上：通过"国家医保服务平台"APP自助办理</li><li>线下：持身份证到参保地医保经办机构办理</li></ul><p>备案后可在异地定点医院直接结算。</p>', 2, 0, 1567, 1),
+(2, '医保门诊可以报销吗？', '<p>职工医保参保人在定点医疗机构发生的门诊费用，可使用个人账户支付，也可按规定享受门诊共济保障。</p><p>居民医保参保人在基层医疗机构就诊，门诊报销比例为50%，年度限额300元。</p>', 3, 0, 1123, 1),
+(3, '养老保险缴费比例是多少？', '<p><strong>职工养老保险：</strong></p><ul><li>单位缴费比例：16%</li><li>个人缴费比例：8%</li></ul><p><strong>灵活就业人员：</strong>缴费比例为20%，其中8%计入个人账户。</p>', 1, 1, 1890, 1),
+(3, '失业保险金如何领取？', '<p>失业前用人单位和本人已缴纳失业保险费满一年，非因本人意愿中断就业的，可申领失业保险金。</p><p>失业保险金标准为本市最低工资的80%，领取期限最长24个月。</p>', 2, 0, 987, 1),
+(3, '社保断缴有什么影响？', '<p><strong>养老保险：</strong>累计缴费满15年即可，断缴不影响累计年限。</p><p><strong>医疗保险：</strong>断缴次月起停止享受医保待遇，连续缴费年限需重新计算。</p><p><strong>生育保险：</strong>需连续缴纳满1年才能享受生育津贴。</p>', 3, 0, 1456, 1),
+(4, '义务教育阶段入学如何报名？', '<p>适龄儿童少年按照"划片招生、就近入学"原则，在规定时间内通过网上报名系统登记。</p><p><strong>报名材料：</strong>户口簿、房产证或租房合同、儿童预防接种证。</p><p>分配结果由教育局统一公示。</p>', 1, 1, 2134, 1),
+(4, '高中招生录取政策是什么？', '<p>高中招生实行"分数优先、遵循志愿"的录取原则。</p><p>总分=中考文化考试成绩+体育成绩+政策性加分。</p><p>省级示范高中指标到校生比例不低于50%。</p>', 2, 0, 1678, 1),
+(4, '学生资助政策有哪些？', '<p>我市已建立覆盖学前教育至高等教育的学生资助体系：</p><ul><li>学前教育：贫困家庭幼儿保教费减免</li><li>义务教育："两免一补"</li><li>高中教育：国家助学金、免学费</li><li>高等教育：生源地信用助学贷款</li></ul>', 3, 0, 876, 1),
+(5, '机动车驾驶证如何申领？', '<p>初次申领驾驶证，需向车辆管理所提出申请。</p><p><strong>申请条件：</strong></p><ul><li>C1驾驶证：年满18周岁，身体条件合格</li><li>通过科目一（理论）、科目二（场地）、科目三（道路）、科目四（安全文明）考试</li></ul>', 1, 1, 1987, 1),
+(5, '机动车年检如何办理？', '<p>小型非营运载客汽车6年内免检，每2年申领检验标志。</p><p>超过6年不满10年的，每2年上线检验1次；超过10年的，每年检验1次。</p><p>可通过"交管12123"APP预约办理。</p>', 2, 0, 1345, 1),
+(5, '外地车限行规定是什么？', '<p>工作日早高峰7:00-9:00、晚高峰17:00-19:00，外地号牌小型客车禁止在绕城高速公路以内区域通行。</p><p>确需临时进入限行区域的，可提前在"交管12123"APP申请"入城通行证"。</p>', 3, 0, 2234, 1);
+
 SET FOREIGN_KEY_CHECKS = 1;
