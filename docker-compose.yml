@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Web Service (PHP + Apache)
+  web:
+    build: ./backend
+    container_name: govcore_web
+    ports:
+      - "3928:80"
+    volumes:
+      - ./backend/src:/var/www/html
+      - ./backend/logs:/var/log/apache2
+    depends_on:
+      - db
+    networks:
+      - govcore_net
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=govcore
+
+  # Database Service (MySQL 8.0)
+  db:
+    image: mysql:8.0
+    container_name: govcore_db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: govcore
+    ports:
+      - "3306" # Internal use mostly, but rule suggests exposing or just linking.
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - govcore_net
+
+networks:
+  govcore_net:
+    driver: bridge
+
+volumes:
+  db_data:
