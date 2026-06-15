@@ -36,6 +36,9 @@ check_login();
                     <a href="faq.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-question-circle me-2"></i>FAQ 管理
                     </a>
+                    <a href="assessment.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-person-check me-2"></i>绩效评议
+                    </a>
                     <a href="announcement.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-megaphone me-2"></i>公告管理
                     </a>

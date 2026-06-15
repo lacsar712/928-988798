@@ -47,6 +47,7 @@ $result = mysqli_query($conn, $sql);
                     <li class="nav-item"><a class="nav-link active" href="index.php">首页</a></li>
                     <li class="nav-item"><a class="nav-link" href="faq.php">常见问题</a></li>
                     <li class="nav-item"><a class="nav-link" href="emergency_contact.php">应急通讯录</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assessment.php">绩效评议</a></li>
                     <li class="nav-item"><a class="nav-link" href="admin/login.php">管理登录</a></li>
                 </ul>
             </div>
