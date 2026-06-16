@@ -144,6 +144,9 @@ check_login();
                     <a href="emergency_plan.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-file-earmark-medical me-2"></i>应急预案管理
                     </a>
+                    <a href="service_point.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-geo-alt-fill me-2"></i>服务点管理
+                    </a>
                     <a href="assessment.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-person-check me-2"></i>绩效评议
                     </a>

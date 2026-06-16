@@ -382,6 +382,145 @@ CREATE TABLE `openday_reservations` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
+-- Table structure for townships
+-- ----------------------------
+DROP TABLE IF EXISTS `townships`;
+CREATE TABLE `townships` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL COMMENT '乡镇/街道名称',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1:乡镇 2:街道',
+  `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_sort_order` (`sort_order`),
+  KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of townships
+-- ----------------------------
+INSERT INTO `townships` (`name`, `type`, `sort_order`, `status`) VALUES
+('城关镇', 1, 1, 1),
+('河东镇', 1, 2, 1),
+('河西镇', 1, 3, 1),
+('南山镇', 1, 4, 1),
+('北坝镇', 1, 5, 1),
+('东城街道', 2, 6, 1),
+('西城街道', 2, 7, 1),
+('南城街道', 2, 8, 1),
+('北城街道', 2, 9, 1);
+
+-- ----------------------------
+-- Table structure for service_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `service_tags`;
+CREATE TABLE `service_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '标签名称',
+  `color` varchar(20) DEFAULT '#004d99' COMMENT '标签颜色',
+  `icon` varchar(50) DEFAULT NULL COMMENT '图标',
+  `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_sort_order` (`sort_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of service_tags
+-- ----------------------------
+INSERT INTO `service_tags` (`name`, `color`, `icon`, `sort_order`, `status`) VALUES
+('医保', '#dc3545', 'bi-heart-pulse', 1, 1),
+('户籍', '#004d99', 'bi-people', 2, 1),
+('民政', '#28a745', 'bi-house', 3, 1),
+('社保', '#fd7e14', 'bi-shield-check', 4, 1),
+('教育', '#6f42c1', 'bi-mortarboard', 5, 1),
+('不动产', '#17a2b8', 'bi-building', 6, 1),
+('税务', '#6c757d', 'bi-calculator', 7, 1),
+('计生', '#e83e8c', 'bi-gender-ambiguous', 8, 1);
+
+-- ----------------------------
+-- Table structure for service_points
+-- ----------------------------
+DROP TABLE IF EXISTS `service_points`;
+CREATE TABLE `service_points` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL COMMENT '村社/服务点名称',
+  `township_id` int(11) NOT NULL COMMENT '所属乡镇/街道ID',
+  `address` varchar(500) DEFAULT NULL COMMENT '地址',
+  `phone` varchar(50) DEFAULT NULL COMMENT '联系电话',
+  `open_time` varchar(200) DEFAULT NULL COMMENT '开放时间',
+  `coord_x` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '地图X坐标 0-100',
+  `coord_y` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '地图Y坐标 0-100',
+  `distance` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT '距离（公里）mock字段',
+  `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1启用 0禁用',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_township_id` (`township_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_coord` (`coord_x`, `coord_y`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of service_points
+-- ----------------------------
+INSERT INTO `service_points` (`name`, `township_id`, `address`, `phone`, `open_time`, `coord_x`, `coord_y`, `distance`, `sort_order`, `status`) VALUES
+('东关村便民服务站', 1, '城关镇东关村村委会1楼', '010-88880101', '工作日 9:00-17:00', 25.00, 30.00, 1.20, 1, 1),
+('西关村便民服务站', 1, '城关镇西关村村委会2楼', '010-88880102', '工作日 8:30-17:30', 15.00, 35.00, 2.50, 2, 1),
+('南街村便民服务站', 1, '城关镇南街村活动中心', '010-88880103', '工作日 9:00-17:00 周六 9:00-12:00', 20.00, 45.00, 1.80, 3, 1),
+('河东村便民服务站', 2, '河东镇河东村村委会', '010-88880201', '工作日 9:00-17:00', 55.00, 25.00, 4.50, 1, 1),
+('河西村便民服务站', 3, '河西镇河西村便民大厅', '010-88880301', '工作日 9:00-17:00', 10.00, 50.00, 5.20, 1, 1),
+('南山村便民服务站', 4, '南山镇南山村村委会', '010-88880401', '工作日 8:30-16:30', 50.00, 70.00, 8.30, 1, 1),
+('北坝村便民服务站', 5, '北坝镇北坝村活动中心', '010-88880501', '工作日 9:00-17:00', 45.00, 15.00, 6.70, 1, 1),
+('东城社区便民服务中心', 6, '东城街道办事处1楼', '010-88880601', '工作日 9:00-18:00 周六 9:00-12:00', 65.00, 40.00, 3.10, 1, 1),
+('西城社区便民服务中心', 7, '西城街道政务大厅', '010-88880701', '工作日 9:00-18:00', 30.00, 55.00, 2.80, 1, 1),
+('南城社区便民服务站', 8, '南城街道社区服务中心', '010-88880801', '工作日 9:00-17:30', 60.00, 65.00, 4.20, 1, 1),
+('北城社区便民服务站', 9, '北城街道居委会', '010-88880901', '工作日 9:00-17:00', 35.00, 20.00, 3.50, 1, 1),
+('太平村便民服务站', 2, '河东镇太平村村委会', '010-88880202', '工作日 9:00-17:00', 70.00, 30.00, 5.80, 2, 1),
+('幸福村便民服务站', 3, '河西镇幸福村活动中心', '010-88880302', '工作日 9:00-16:30', 15.00, 65.00, 6.50, 2, 1),
+('光明社区便民服务站', 6, '东城街道光明社区', '010-88880602', '工作日 9:00-17:30', 75.00, 45.00, 3.80, 2, 1),
+('和平社区便民服务站', 7, '西城街道和平社区', '010-88880702', '工作日 9:00-17:00', 25.00, 60.00, 4.00, 2, 1);
+
+-- ----------------------------
+-- Table structure for service_point_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `service_point_tags`;
+CREATE TABLE `service_point_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_point_id` int(11) NOT NULL COMMENT '服务点ID',
+  `tag_id` int(11) NOT NULL COMMENT '标签ID',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_point_tag` (`service_point_id`, `tag_id`),
+  KEY `idx_service_point_id` (`service_point_id`),
+  KEY `idx_tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of service_point_tags
+-- ----------------------------
+INSERT INTO `service_point_tags` (`service_point_id`, `tag_id`) VALUES
+(1, 1), (1, 2), (1, 3), (1, 4),
+(2, 1), (2, 2), (2, 5),
+(3, 2), (3, 3), (3, 8),
+(4, 1), (4, 4), (4, 6),
+(5, 2), (5, 3), (5, 7),
+(6, 1), (6, 3), (6, 4),
+(7, 2), (7, 5), (7, 8),
+(8, 1), (8, 2), (8, 3), (8, 4), (8, 5), (8, 6),
+(9, 1), (9, 2), (9, 3), (9, 4), (9, 7),
+(10, 1), (10, 3), (10, 8),
+(11, 2), (11, 4), (11, 5),
+(12, 1), (12, 3), (12, 6),
+(13, 2), (13, 4), (13, 7),
+(14, 1), (14, 2), (14, 5), (14, 8),
+(15, 3), (15, 4), (15, 6);
+
+-- ----------------------------
 -- Table structure for emergency_plans
 -- ----------------------------
 DROP TABLE IF EXISTS `emergency_plans`;

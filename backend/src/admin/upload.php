@@ -88,6 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="emergency_plan.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-file-earmark-medical me-2"></i>应急预案管理
                     </a>
+                    <a href="service_point.php" class="list-group-item list-group-item-action">
+                        <i class="bi bi-geo-alt-fill me-2"></i>服务点管理
+                    </a>
                     <a href="net_tool.php" class="list-group-item list-group-item-action">
                         <i class="bi bi-broadcast me-2"></i>网络检测工具
                     </a>
