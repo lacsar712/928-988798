@@ -17,6 +17,8 @@ WORKDIR /var/www/html
 
 # Copy source code (Best practice for delivery)
 COPY src/ /var/www/html/
+COPY migrations/ /var/www/migrations/
+COPY tools/ /var/www/tools/
 
 # Set permissions for uploads and data
 RUN chown -R www-data:www-data /var/www/html \
@@ -25,3 +27,6 @@ RUN chown -R www-data:www-data /var/www/html \
     && mkdir -p /var/www/html/data \
     && chmod -R 777 /var/www/html/uploads \
     && chmod -R 777 /var/www/html/data
+
+# Auto-run migrations on container start, then launch Apache
+CMD ["sh", "-c", "php /var/www/tools/migrate.php up && apache2-foreground"]
