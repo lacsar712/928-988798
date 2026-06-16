@@ -1,5 +1,6 @@
 <?php
 require_once 'func.php';
+require_once 'lib/FileIndex.php';
 
 // [VULN] 1. SQL Injection (Search)
 $search_sql = "";
@@ -16,6 +17,9 @@ if (isset($_GET['keyword'])) {
 }
 
 $result = mysqli_query($conn, $sql);
+
+$fi = new FileIndex(UPLOAD_PATH, __DIR__ . '/data');
+$policyPage = $fi->getPage(isset($_GET['p']) ? (int)$_GET['p'] : 1, 10);
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -129,27 +133,8 @@ $result = mysqli_query($conn, $sql);
                     <div class="card-body">
                         <div class="list-group list-group-flush">
                             <?php
-                            $upload_dir = 'uploads/';
-                            if (is_dir($upload_dir)) {
-                                $files = scandir($upload_dir);
-                                $found_files = false;
-                                foreach ($files as $file) {
-                                    if ($file !== '.' && $file !== '..' && $file !== '.gitkeep') {
-                                        $found_files = true;
-                                        echo '<a href="uploads/' . htmlspecialchars($file) . '" class="list-group-item list-group-item-action py-2" target="_blank">';
-                                        echo '<div class="d-flex w-100 justify-content-between align-items-center">';
-                                        echo '<span class="text-dark"><i class="bi bi-file-earmark-pdf text-danger me-2"></i>' . htmlspecialchars($file) . '</span>';
-                                        echo '<small class="text-muted">下载</small>';
-                                        echo '</div>';
-                                        echo '</a>';
-                                    }
-                                }
-                                if (!$found_files) {
-                                    echo '<div class="text-center text-muted py-3">暂无政策文件</div>';
-                                }
-                            } else {
-                                echo '<div class="text-center text-muted py-3">暂无政策文件</div>';
-                            }
+                            foreach ($policyPage['items'] as $f) echo FileIndex::renderItem($f);
+                            if (empty($policyPage['items'])) echo FileIndex::renderEmpty();
                             ?>
                         </div>
                     </div>
